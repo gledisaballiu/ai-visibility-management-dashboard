@@ -18,9 +18,8 @@ Designed in Figma & Figma Make, and built solo, front-to-back.
 - react-router
 - recharts (for charts/visualizations)
 
-State is handled with plain React component state and `localStorage` for
-persistence between sessions — there's no Redux, Zustand, or TanStack Query
-in here.
+State is handled with plain React component state, with `localStorage` used
+to persist data between sessions.
 
 ## Getting started
 
