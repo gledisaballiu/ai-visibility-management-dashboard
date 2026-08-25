@@ -1,0 +1,193 @@
+/* ==========================================================================
+   YardGEO Planner — design tokens
+   Replaces src/styles/theme.css
+
+   Structure:
+     1. Semantic primitives  — the only place a raw hex appears.
+     2. Model identity       — series colours, named for what they encode.
+     3. shadcn surface       — aliases only. No new values, no duplicates.
+     4. .dark                — re-values the primitives; aliases follow.
+
+   NOTE: .dark must sit on the SAME element as :root (normally <html>)
+   so the aliases in section 3 re-resolve against the dark primitives.
+   ========================================================================== */
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+
+  /* --- 1. semantic primitives (light) ----------------------------------- */
+  --bg-app:      #F4F5F2;
+  --bg-card:     #FFFFFF;
+  --bg-inset:    #F7F8F5;
+  --border-card: #E4E7E0;
+
+  --ink:   #0F1115;   /* headings, primary text            */
+  --ink-2: #4B5162;   /* body, secondary                   */
+  --ink-3: #8B92A0;   /* labels, captions, disabled        */
+
+  --lime:      #C6F24E;   /* brand accent                  */
+  --lime-deep: #9BC72B;   /* lime on light — text/borders  */
+
+  --pos:      #157F3D;
+  --neg:      #C4443C;
+  --warn-bg:  #FFF1E6;
+  --warn-ink: #B45309;
+
+  --radius-card: 18px;
+  --shadow-card: 0 1px 2px rgba(15, 17, 21, .04),
+                 0 4px 12px rgba(15, 17, 21, .03);
+
+  /* --- 2. model identity ------------------------------------------------ */
+  /* Series colours are the tracked model's own brand colour, so a legend
+     is barely needed. Do not reuse these for UI state.                     */
+  --model-chatgpt: #10A37F;
+  --model-claude:  #CC785C;
+  --model-gemini:  #4285F4;
+  --model-other:   #7B61FF;
+
+  /* --- 3. shadcn surface — aliases only --------------------------------- */
+  --background:             var(--bg-app);
+  --foreground:             var(--ink);
+  --card:                   var(--bg-card);
+  --card-foreground:        var(--ink);
+  --popover:                var(--bg-card);
+  --popover-foreground:     var(--ink);
+
+  --primary:                var(--ink);
+  --primary-foreground:     var(--bg-card);
+  --secondary:              var(--bg-inset);
+  --secondary-foreground:   var(--ink);
+  --muted:                  var(--bg-inset);
+  --muted-foreground:       var(--ink-3);
+  --accent:                 var(--lime);
+  --accent-foreground:      var(--ink);
+  --destructive:            var(--neg);
+  --destructive-foreground: #FFFFFF;
+
+  --border:           var(--border-card);
+  --input:            transparent;
+  --input-background: var(--bg-inset);
+  --switch-background: var(--ink-3);
+  --ring:             var(--lime);
+  --radius:           1rem;
+
+  --chart-1: var(--lime);
+  --chart-2: var(--model-chatgpt);
+  --chart-3: var(--model-other);
+  --chart-4: var(--model-claude);
+  --chart-5: var(--model-gemini);
+
+  /* sidebar is the dark rail in both modes — it does not invert */
+  --sidebar:                    #0F1115;
+  --sidebar-foreground:         #F7F8F5;
+  --sidebar-primary:            var(--lime);
+  --sidebar-primary-foreground: #0F1115;
+  --sidebar-accent:             #1B1E24;
+  --sidebar-accent-foreground:  #F7F8F5;
+  --sidebar-border:             #232830;
+  --sidebar-ring:               var(--lime);
+}
+
+/* --- 4. dark ------------------------------------------------------------ */
+/* Only the primitives change. Everything in section 3 follows.             */
+.dark {
+  --bg-app:      #0B0C0E;
+  --bg-card:     #16181C;
+  --bg-inset:    #101216;
+  --border-card: #262A31;
+
+  --ink:   #F7F8F5;
+  --ink-2: #A8AEBB;
+  --ink-3: #6E7684;
+
+  --lime:      #C6F24E;
+  --lime-deep: #DFFF8A;   /* on dark the "deep" step goes lighter, not darker */
+
+  --pos:      #4ADE80;
+  --neg:      #F87171;
+  --warn-bg:  #2A1E12;
+  --warn-ink: #FBBF24;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, .5),
+                 0 4px 16px rgba(0, 0, 0, .35);
+
+  /* the three aliases whose mapping genuinely differs in dark */
+  --primary-foreground:     var(--bg-app);
+  --destructive-foreground: var(--bg-app);
+  --switch-background:      #39404A;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-lime: var(--lime);
+  --color-lime-deep: var(--lime-deep);
+  --color-pos: var(--pos);
+  --color-neg: var(--neg);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    font-size: var(--font-size);
+  }
+  h1 { font-size: var(--text-2xl); font-weight: var(--font-weight-medium); line-height: 1.4; }
+  h2 { font-size: var(--text-xl);  font-weight: var(--font-weight-medium); line-height: 1.4; }
+  h3 { font-size: var(--text-lg);  font-weight: var(--font-weight-medium); line-height: 1.45; }
+  h4 { font-size: var(--text-base);font-weight: var(--font-weight-medium); line-height: 1.5; }
+  label  { font-size: var(--text-base); font-weight: var(--font-weight-medium); line-height: 1.5; }
+  button { font-size: var(--text-base); font-weight: var(--font-weight-medium); line-height: 1.5; }
+  input  { font-size: var(--text-base); font-weight: var(--font-weight-normal); line-height: 1.5; }
+}
