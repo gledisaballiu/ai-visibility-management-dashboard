@@ -8,7 +8,7 @@ This is a design-led concept project, not a production system: there's no
 backend or live data source. All content is mocked, and the UI is built to
 demonstrate the product idea and interaction flows end to end.
 
-Designed in Figma and built solo, front-to-back.
+Designed in Figma & Figma Make, and built solo, front-to-back.
 
 ## Tech stack
 
