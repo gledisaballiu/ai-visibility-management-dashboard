@@ -2,13 +2,7 @@ import { useState } from "react";
 import { TrendingUp, TrendingDown, X, Mail, ExternalLink, UserMinus } from "lucide-react";
 import { FONT, creatorsData, agencyCampaignsData, CREATOR_STACKS, agencyClientsData } from "../../lib/data";
 import { usePlanner } from "../../lib/plannerContext";
-
-const C = {
-  page: "#0B0A0A", shell: "#1A1715", card: "#232020", cardLine: "#302B28",
-  inset: "#1B1817", hover: "#2E2A27",
-  t1: "#EFE9E1", t2: "#A9A29B", t3: "#77706A",
-  cream: "#EDE8E0", pos: "#4ADE80", neg: "#EF4444", attn: "#F79521", prog: "#2F80F5",
-};
+import { C } from "../../lib/theme";
 
 // ─── Platform icons ─────────────────────────────────────────────────────────────
 function TwitterIcon({ size = 14 }: { size?: number }) {

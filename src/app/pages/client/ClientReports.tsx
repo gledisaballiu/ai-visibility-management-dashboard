@@ -2,14 +2,9 @@ import { useState } from "react";
 import { useOutletContext } from "react-router";
 import { Download, TrendingUp } from "lucide-react";
 import { agencyClientsData } from "../../lib/data";
+import { C } from "../../lib/theme";
 
 const FONT = "Inter, -apple-system, system-ui, sans-serif";
-
-const C = {
-  card: "#232020", cardLine: "#302B28", inset: "#1B1817",
-  t1: "#EFE9E1", t2: "#A9A29B", t3: "#77706A",
-  cream: "#EDE8E0", prog: "#2F80F5", pos: "#4ADE80",
-};
 
 const CARD = {
   background: C.card, border: `1px solid ${C.cardLine}`, borderRadius: 16,

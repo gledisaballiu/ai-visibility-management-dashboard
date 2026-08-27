@@ -2,12 +2,7 @@ import { useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { agencyClientsData, creatorsData } from "../../lib/data";
-
-const C = {
-  page: "#0B0A0A", shell: "#1A1715", card: "#232020", cardLine: "#302B28",
-  inset: "#1B1817", t1: "#EFE9E1", t2: "#A9A29B", t3: "#77706A",
-  cream: "#EDE8E0", pos: "#4ADE80", neg: "#EF4444", attn: "#F79521", prog: "#2F80F5",
-};
+import { C } from "../../lib/theme";
 const FONT = "Inter, -apple-system, system-ui, sans-serif";
 const CARD: React.CSSProperties = {
   background: "#232020", border: "1px solid #302B28", borderRadius: 16,

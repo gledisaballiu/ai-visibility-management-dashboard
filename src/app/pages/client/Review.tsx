@@ -2,16 +2,11 @@ import { useState } from "react";
 import { useOutletContext } from "react-router";
 import { CheckCircle, XCircle, MessageSquare, FileText, Globe, Bot, TrendingUp } from "lucide-react";
 import { toast } from "sonner";
-import { agencyClientsData, agencyPipelineData, STAGE_META, type PlannerContentType } from "../../lib/data";
+import { agencyClientsData, agencyPipelineData, STAGE_META, LIME, type PlannerContentType } from "../../lib/data";
 import { usePlanner } from "../../lib/plannerContext";
+import { C } from "../../lib/theme";
 
 const FONT = "Inter, -apple-system, system-ui, sans-serif";
-
-const C = {
-  page: "#1A1715", card: "#232020", cardLine: "#302B28", inset: "#1B1817",
-  t1: "#EFE9E1", t2: "#A9A29B", t3: "#77706A",
-  pos: "#4ADE80", neg: "#EF4444",
-};
 
 const SHORTLIST_CREATORS = [
   { id: 1, name: "Kelsey Hightower", handle: "@kelseyhightower", reach: "118K", tags: ["High match","LLM citations","Worked with you before"],  reason: "Deep Kubernetes and cloud IDE content. Consistently cited across ChatGPT and Claude for enterprise dev tools queries." },
@@ -164,7 +159,7 @@ export default function ClientApprovals() {
                   marginBottom: -1,
                 }}>
                 {t.label}
-                <span style={{ marginLeft: 5, fontSize: 10, background: tab === t.key ? "#86E03A" : C.inset, color: tab === t.key ? "#0B0A0A" : C.t3, borderRadius: 999, padding: "1px 6px" }}>
+                <span style={{ marginLeft: 5, fontSize: 10, background: tab === t.key ? LIME : C.inset, color: tab === t.key ? "#0B0A0A" : C.t3, borderRadius: 999, padding: "1px 6px" }}>
                   {t.count}
                 </span>
               </button>
@@ -179,7 +174,7 @@ export default function ClientApprovals() {
               const isSelected = selectedCreator === creator.id;
               return (
                 <div key={creator.id} onClick={() => setSelectedCreator(creator.id)}
-                  style={{ padding: "14px 16px", cursor: "pointer", background: isSelected ? "rgba(134,224,58,0.1)" : "transparent", borderLeft: isSelected ? "3px solid #86E03A" : "3px solid transparent", borderBottom: `1px solid ${C.cardLine}` }}>
+                  style={{ padding: "14px 16px", cursor: "pointer", background: isSelected ? "rgba(198,242,78,0.1)" : "transparent", borderLeft: isSelected ? `3px solid ${LIME}` : "3px solid transparent", borderBottom: `1px solid ${C.cardLine}` }}>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                     <div style={{ fontSize: 13, fontWeight: 600, color: C.t1 }}>{creator.name}</div>
                     {approved && <span style={{ fontSize: 10, fontWeight: 600, color: C.pos, background: "rgba(74,222,128,0.15)", borderRadius: 999, padding: "1px 7px" }}>Approved</span>}
@@ -188,7 +183,7 @@ export default function ClientApprovals() {
                   <div style={{ fontSize: 12, color: C.t3, marginTop: 2 }}>{creator.handle} · {creator.reach} reach</div>
                   <div style={{ display: "flex", gap: 4, marginTop: 6, flexWrap: "wrap" }}>
                     {creator.tags.map(t => (
-                      <span key={t} style={{ fontSize: 10, background: "rgba(134,224,58,0.15)", color: "#86E03A", borderRadius: 999, padding: "2px 6px" }}>{t}</span>
+                      <span key={t} style={{ fontSize: 10, background: "rgba(198,242,78,0.15)", color: LIME, borderRadius: 999, padding: "2px 6px" }}>{t}</span>
                     ))}
                   </div>
                 </div>
@@ -201,7 +196,7 @@ export default function ClientApprovals() {
                 {/* Planner-submitted pieces — creator submissions */}
                 {plannerReviewPieces.length > 0 && (
                   <div>
-                    <div style={{ padding: "8px 16px 6px", fontSize: 10, fontWeight: 700, color: C.t3, textTransform: "uppercase", letterSpacing: "0.06em", background: "rgba(59,130,246,0.06)", borderBottom: `1px solid ${C.cardLine}` }}>
+                    <div style={{ padding: "8px 16px 6px", fontSize: 10, fontWeight: 700, color: C.t3, textTransform: "uppercase", letterSpacing: "0.06em", background: "rgba(47,128,245,0.06)", borderBottom: `1px solid ${C.cardLine}` }}>
                       Creator submissions
                     </div>
                     {plannerReviewPieces.map(piece => {
@@ -212,12 +207,12 @@ export default function ClientApprovals() {
                         <div
                           key={piece.id}
                           onClick={() => setDraftSel({ source: "planner", pieceId: piece.id, campaignId: piece.campaignId })}
-                          style={{ padding: "13px 16px", cursor: "pointer", background: isSelected ? "rgba(59,130,246,0.1)" : "transparent", borderLeft: isSelected ? "3px solid #60A5FA" : "3px solid transparent", borderBottom: `1px solid ${C.cardLine}`, transition: "all 100ms" }}>
+                          style={{ padding: "13px 16px", cursor: "pointer", background: isSelected ? "rgba(47,128,245,0.1)" : "transparent", borderLeft: isSelected ? `3px solid ${C.prog}` : "3px solid transparent", borderBottom: `1px solid ${C.cardLine}`, transition: "all 100ms" }}>
                           <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 8, marginBottom: 4 }}>
                             <div style={{ fontSize: 13, fontWeight: 600, color: C.t1, flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{piece.title}</div>
                             {wasApproved && <span style={{ fontSize: 10, fontWeight: 600, color: C.pos, background: "rgba(74,222,128,0.15)", borderRadius: 999, padding: "1px 7px", flexShrink: 0 }}>Approved</span>}
                             {wasDeclined && <span style={{ fontSize: 10, fontWeight: 600, color: C.neg, background: "rgba(239,68,68,0.15)", borderRadius: 999, padding: "1px 7px", flexShrink: 0 }}>Declined</span>}
-                            {!wasApproved && !wasDeclined && <span style={{ fontSize: 10, fontWeight: 700, color: "#60A5FA", background: "rgba(59,130,246,0.15)", borderRadius: 999, padding: "1px 7px", flexShrink: 0 }}>New</span>}
+                            {!wasApproved && !wasDeclined && <span style={{ fontSize: 10, fontWeight: 700, color: C.prog, background: "rgba(47,128,245,0.15)", borderRadius: 999, padding: "1px 7px", flexShrink: 0 }}>New</span>}
                           </div>
                           <div style={{ fontSize: 11, color: C.t3 }}>
                             {piece.creator ?? "YardGEO"} · {TYPE_LABEL[piece.type as PlannerContentType] ?? piece.type}
@@ -249,7 +244,7 @@ export default function ClientApprovals() {
                       const stage = STAGE_META[draft.stage];
                       return (
                         <div key={draft.id} onClick={() => setDraftSel({ source: "pipeline", id: draft.id })}
-                          style={{ padding: "14px 16px", cursor: "pointer", background: isSelected ? "rgba(134,224,58,0.1)" : "transparent", borderLeft: isSelected ? "3px solid #86E03A" : "3px solid transparent", borderBottom: `1px solid ${C.cardLine}` }}>
+                          style={{ padding: "14px 16px", cursor: "pointer", background: isSelected ? "rgba(198,242,78,0.1)" : "transparent", borderLeft: isSelected ? `3px solid ${LIME}` : "3px solid transparent", borderBottom: `1px solid ${C.cardLine}` }}>
                           <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 8 }}>
                             <div style={{ fontSize: 13, fontWeight: 600, color: C.t1, flex: 1 }}>{draft.title}</div>
                             {approved && <span style={{ fontSize: 10, fontWeight: 600, color: C.pos, background: "rgba(74,222,128,0.15)", borderRadius: 999, padding: "1px 7px", flexShrink: 0 }}>Approved</span>}
@@ -290,7 +285,7 @@ export default function ClientApprovals() {
                     {!approvedCreators.has(currentCreator.id) && !rejectedCreators.has(currentCreator.id) && (
                       <>
                         <button onClick={() => approveCreator(currentCreator.id)}
-                          style={{ display: "flex", alignItems: "center", gap: 6, background: "#86E03A", color: "#0B0A0A", border: "none", borderRadius: 8, padding: "8px 16px", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>
+                          style={{ display: "flex", alignItems: "center", gap: 6, background: LIME, color: "#0B0A0A", border: "none", borderRadius: 8, padding: "8px 16px", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>
                           <CheckCircle size={15} /> Approve
                         </button>
                         <button onClick={() => rejectCreator(currentCreator.id)}
@@ -315,7 +310,7 @@ export default function ClientApprovals() {
                 </div>
                 <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginBottom: 20 }}>
                   {currentCreator.tags.map(t => (
-                    <span key={t} style={{ fontSize: 11, background: "rgba(134,224,58,0.15)", color: "#86E03A", borderRadius: 999, padding: "3px 10px" }}>{t}</span>
+                    <span key={t} style={{ fontSize: 11, background: "rgba(198,242,78,0.15)", color: LIME, borderRadius: 999, padding: "3px 10px" }}>{t}</span>
                   ))}
                 </div>
               </div>
@@ -329,7 +324,7 @@ export default function ClientApprovals() {
                 <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16 }}>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
-                      <span style={{ display: "inline-flex", alignItems: "center", gap: 5, fontSize: 11, fontWeight: 600, background: "rgba(59,130,246,0.15)", color: "#60A5FA", borderRadius: 999, padding: "2px 9px" }}>
+                      <span style={{ display: "inline-flex", alignItems: "center", gap: 5, fontSize: 11, fontWeight: 600, background: "rgba(47,128,245,0.15)", color: C.prog, borderRadius: 999, padding: "2px 9px" }}>
                         <TypeIcon type={currentPlannerPiece.type} />
                         {TYPE_LABEL[currentPlannerPiece.type as PlannerContentType] ?? currentPlannerPiece.type}
                       </span>
@@ -350,7 +345,7 @@ export default function ClientApprovals() {
                       <>
                         <button
                           onClick={() => approvePlannerPiece(currentPlannerPiece.campaignId, currentPlannerPiece.id)}
-                          style={{ display: "flex", alignItems: "center", gap: 6, background: "#86E03A", color: "#0B0A0A", border: "none", borderRadius: 8, padding: "8px 16px", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>
+                          style={{ display: "flex", alignItems: "center", gap: 6, background: LIME, color: "#0B0A0A", border: "none", borderRadius: 8, padding: "8px 16px", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>
                           <CheckCircle size={15} />Approve & Publish
                         </button>
                         <button
@@ -370,8 +365,8 @@ export default function ClientApprovals() {
                 </div>
               </div>
               <div style={{ flex: 1, overflowY: "auto", padding: "20px 24px" }}>
-                <div style={{ background: "rgba(59,130,246,0.06)", border: `1px solid rgba(59,130,246,0.2)`, borderRadius: 12, padding: "12px 16px", marginBottom: 20 }}>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: "#60A5FA", marginBottom: 4 }}>CREATOR SUBMISSION</div>
+                <div style={{ background: "rgba(47,128,245,0.06)", border: `1px solid rgba(47,128,245,0.2)`, borderRadius: 12, padding: "12px 16px", marginBottom: 20 }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: C.prog, marginBottom: 4 }}>CREATOR SUBMISSION</div>
                   <div style={{ fontSize: 12, color: "#93C5FD" }}>
                     <strong>{currentPlannerPiece.creator ?? "Your team"}</strong> has submitted this piece for your approval. Review it and either approve to publish or request changes.
                   </div>
@@ -406,7 +401,7 @@ export default function ClientApprovals() {
                     {!approvedPipeline.has(currentPipelineDraft.id) && !rejectedPipeline.has(currentPipelineDraft.id) && (
                       <>
                         <button onClick={() => approvePipeline(currentPipelineDraft.id)}
-                          style={{ display: "flex", alignItems: "center", gap: 6, background: "#86E03A", color: "#0B0A0A", border: "none", borderRadius: 8, padding: "8px 16px", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>
+                          style={{ display: "flex", alignItems: "center", gap: 6, background: LIME, color: "#0B0A0A", border: "none", borderRadius: 8, padding: "8px 16px", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>
                           <CheckCircle size={15} /> Approve
                         </button>
                         <button onClick={() => rejectPipeline(currentPipelineDraft.id)}

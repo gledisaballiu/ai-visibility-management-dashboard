@@ -2,29 +2,14 @@ import { useState } from "react";
 import { useOutletContext } from "react-router";
 import { agencyClientsData } from "../../lib/data";
 import { toast } from "sonner";
+import { C } from "../../lib/theme";
 
-// ─── Dark theme tokens (matching client-overview.html) ────────────────────────
-const C = {
-  page:      "#0B0A0A",
-  shell:     "#1A1715",
-  card:      "#232020",
-  cardLine:  "#302B28",
-  inset:     "#1B1817",
-  t1:        "#EFE9E1",
-  t2:        "#A9A29B",
-  t3:        "#77706A",
-  blue:      "#2F80F5",
-  blueTrack: "#233047",
-  green:     "#4ADE80",
-  greenPill: "#3ECF6E",
-  magenta:   "#EC29C4",
-  lime:      "#86E03A",
-  cyan:      "#2DD4DE",
-  orange:    "#F79521",
-  teal:      "#2CD6C4",
-  red:       "#EF4444",
-  cream:     "#EDE8E0",
-};
+// Muted track behind the score arc — derived from the shared "prog" blue.
+const BLUE_TRACK = "#233047";
+
+// Competitor-comparison chart reuses the shared semantic tones instead of
+// introducing new hues, so it still reads as part of the same palette.
+const COMPETITOR_COLORS = [C.prog, C.pos, C.attn, C.t2];
 
 const FONT = "Inter, -apple-system, system-ui, sans-serif";
 
@@ -73,10 +58,10 @@ function GeoScorePanel({ score = 76 }: { score?: number }) {
         {score}<em style={{ fontStyle: "normal", fontSize: 26, fontWeight: 500, color: C.t2, letterSpacing: "-0.01em" }}>/100</em>
       </div>
       <svg viewBox="0 0 300 160" style={{ width: "100%", maxWidth: 300, margin: "8px 0 4px" }}>
-        <path d={`M30 148 A120 120 0 0 1 270 148`} fill="none" stroke={C.blueTrack} strokeWidth="26" strokeLinecap="round"/>
-        <path d={`M30 148 A120 120 0 0 1 ${ex.toFixed(1)} ${ey.toFixed(1)}`} fill="none" stroke={C.blue} strokeWidth="26" strokeLinecap="round"/>
+        <path d={`M30 148 A120 120 0 0 1 270 148`} fill="none" stroke={BLUE_TRACK} strokeWidth="26" strokeLinecap="round"/>
+        <path d={`M30 148 A120 120 0 0 1 ${ex.toFixed(1)} ${ey.toFixed(1)}`} fill="none" stroke={C.prog} strokeWidth="26" strokeLinecap="round"/>
       </svg>
-      <div style={{ color: C.green, fontSize: 13, fontWeight: 500 }}>+8 points this month ↗</div>
+      <div style={{ color: C.pos, fontSize: 13, fontWeight: 500 }}>+8 points this month ↗</div>
       <div style={{ color: C.t2, fontSize: 13, marginTop: 2 }}>Top 18% in Dev tools</div>
     </div>
   );
@@ -85,11 +70,11 @@ function GeoScorePanel({ score = 76 }: { score?: number }) {
 // ─── POSITION ─────────────────────────────────────────────────────────────────
 function PositionPanel() {
   const competitors = [
-    { name: "Your Brand", pct: 32.4, color: C.magenta },
-    { name: "Gitpod",     pct: 24, color: C.lime },
-    { name: "Codespaces", pct: 20, color: C.cyan },
-    { name: "DevPod",     pct: 12, color: C.orange },
-    { name: "Others",     pct: 12, color: "#555" },
+    { name: "Your Brand", pct: 32.4, color: COMPETITOR_COLORS[0] },
+    { name: "Gitpod",     pct: 24, color: COMPETITOR_COLORS[1] },
+    { name: "Codespaces", pct: 20, color: COMPETITOR_COLORS[2] },
+    { name: "DevPod",     pct: 12, color: COMPETITOR_COLORS[3] },
+    { name: "Others",     pct: 12, color: C.t3 },
   ];
 
   return (
@@ -99,7 +84,7 @@ function PositionPanel() {
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
         <div>
           <div style={{ fontSize: 34, fontWeight: 600, letterSpacing: "-0.035em", lineHeight: 1.05, color: C.t1 }}>32.4%</div>
-          <div style={{ color: C.green, fontSize: 13, fontWeight: 500, marginTop: 8 }}>+6 pts this month ↗</div>
+          <div style={{ color: C.pos, fontSize: 13, fontWeight: 500, marginTop: 8 }}>+6 pts this month ↗</div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           {competitors.map(c => (
@@ -237,7 +222,7 @@ function VisitsPanel() {
       <div style={{ display: "flex", alignItems: "center", gap: 22, margin: "10px 0 2px" }}>
         <div style={{ fontSize: 12, color: C.t2, lineHeight: 1.45 }}>Last updated<br/>{pd.updated}</div>
         <div style={{ fontSize: 32, fontWeight: 600, letterSpacing: "-0.035em", lineHeight: 1, color: C.t1 }}>{pd.value}</div>
-        <div style={{ background: C.greenPill, color: "#0B2416", fontSize: 13, fontWeight: 600, padding: "3px 10px", borderRadius: 8, whiteSpace: "nowrap", flexShrink: 0 }}>{pd.delta}</div>
+        <div style={{ background: C.pos, color: "#0B2416", fontSize: 13, fontWeight: 600, padding: "3px 10px", borderRadius: 8, whiteSpace: "nowrap", flexShrink: 0 }}>{pd.delta}</div>
       </div>
       <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-end", minHeight: 100 }}>
         {/* Fix 3d: graph hover tooltip */}
@@ -251,12 +236,12 @@ function VisitsPanel() {
           >
             <defs>
               <linearGradient id="tealGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={C.teal} stopOpacity=".26"/>
-                <stop offset="100%" stopColor={C.teal} stopOpacity="0"/>
+                <stop offset="0%" stopColor={C.pos} stopOpacity=".26"/>
+                <stop offset="100%" stopColor={C.pos} stopOpacity="0"/>
               </linearGradient>
             </defs>
             <path d={fillPath} fill="url(#tealGrad)"/>
-            <path d={linePath} fill="none" stroke={C.teal} strokeWidth="2.4" strokeLinejoin="round"/>
+            <path d={linePath} fill="none" stroke={C.pos} strokeWidth="2.4" strokeLinejoin="round"/>
           </svg>
           {hoverPoint && (
             <div style={{ position: "absolute", left: hoverPoint.x, top: hoverPoint.y - 36, transform: "translateX(-50%)", background: "#232020", border: "1px solid #302B28", borderRadius: 8, padding: "4px 10px", fontSize: 12, fontWeight: 600, color: "#EFE9E1", pointerEvents: "none", whiteSpace: "nowrap", zIndex: 10 }}>
@@ -314,12 +299,12 @@ function ContentCreatorsPanel() {
               </div>
               <div style={{ marginLeft: "auto", textAlign: "right", flexShrink: 0 }}>
                 <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: C.inset, border: `1px solid ${C.cardLine}`, padding: "4px 8px", borderRadius: 8, fontSize: 11.5, color: C.t1, fontWeight: 500 }}>
-                  <span style={{ width: 15, height: 11, borderRadius: 3, background: C.red, display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <span style={{ width: 15, height: 11, borderRadius: 3, background: C.neg, display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                     <span style={{ borderLeft: "5px solid #fff", borderTop: "3px solid transparent", borderBottom: "3px solid transparent", display: "block", marginLeft: 1 }}/>
                   </span>
                   {cr.subs} subscribers
                 </div>
-                <div style={{ fontSize: 12, fontWeight: 500, marginTop: 8, color: cr.available ? C.green : C.orange }}>
+                <div style={{ fontSize: 12, fontWeight: 500, marginTop: 8, color: cr.available ? C.pos : C.attn }}>
                   {cr.available ? "Available" : "Busy Until Feb 2025"}
                 </div>
               </div>
@@ -364,7 +349,7 @@ function GapCardsPanel() {
         <div key={gc.title} style={{ background: C.card, border: `1px solid ${C.cardLine}`, borderRadius: 16, padding: "16px 18px" }}>
           <div style={{ display: "flex", alignItems: "flex-start", gap: 14, marginBottom: 10 }}>
             <div style={{ fontSize: 15, fontWeight: 500, letterSpacing: "-0.012em", lineHeight: 1.3, color: C.t1 }}>{gc.title}</div>
-            <div style={{ marginLeft: "auto", background: C.red, color: "#fff", fontSize: 12, fontWeight: 600, padding: "5px 10px", borderRadius: 7, whiteSpace: "nowrap", flexShrink: 0 }}>high priority</div>
+            <div style={{ marginLeft: "auto", background: C.neg, color: "#fff", fontSize: 12, fontWeight: 600, padding: "5px 10px", borderRadius: 7, whiteSpace: "nowrap", flexShrink: 0 }}>high priority</div>
           </div>
           <div style={{ fontSize: 13, color: C.t2, lineHeight: 1.5 }}>{gc.body}</div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14, margin: "14px 0 12px" }}>
@@ -440,7 +425,7 @@ function QueryMatrixPanel() {
           <div key={q.rank} style={{ padding: "14px 0", borderBottom: i < QUERIES.length - 1 ? "1px solid #2B2725" : "none" }}>
             <div style={{ display: "flex", alignItems: "center", fontSize: 12, color: C.t2 }}>
               #{q.rank}
-              <span style={{ marginLeft: "auto", fontWeight: 500, color: q.up ? C.green : C.t2 }}>{q.delta}</span>
+              <span style={{ marginLeft: "auto", fontWeight: 500, color: q.up ? C.pos : C.t2 }}>{q.delta}</span>
             </div>
             <div style={{ fontSize: 14, fontWeight: 500, letterSpacing: "-0.012em", margin: "7px 0 16px", lineHeight: 1.35, color: C.t1 }}>{q.q}</div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 10 }}>

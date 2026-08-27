@@ -3,16 +3,10 @@ import { Outlet, NavLink, useNavigate } from "react-router";
 import { LayoutDashboard, Users, UserSquare2, LayoutList, Settings, LogOut, Bell } from "lucide-react";
 import { YardGEOLogo } from "../../lib/logo";
 import { FONT } from "../../lib/data";
+import { C } from "../../lib/theme";
 
 const RAIL_COLLAPSED = 72;
 const RAIL_EXPANDED  = 220;
-
-const C = {
-  page: "#0B0A0A", shell: "#1A1715", card: "#232020", cardLine: "#302B28",
-  rail: "#171413", railLine: "#272322", hover: "#2E2A27",
-  t1: "#EFE9E1", t2: "#A9A29B", t3: "#77706A",
-  cream: "#EDE8E0",
-};
 
 const NAV = [
   { to: "/agency",          label: "Dashboard", Icon: LayoutDashboard, end: true },

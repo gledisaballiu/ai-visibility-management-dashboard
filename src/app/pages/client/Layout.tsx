@@ -1,21 +1,7 @@
 import { Outlet, NavLink, useNavigate } from "react-router";
 import { agencyClientsData, agencyPipelineData } from "../../lib/data";
 import { YardGEOLogo } from "../../lib/logo";
-
-const C = {
-  page:     "#0B0A0A",
-  shell:    "#1A1715",
-  card:     "#232020",
-  cardLine: "#302B28",
-  inset:    "#1B1817",
-  rail:     "#171413",
-  railLine: "#272322",
-  hover:    "#2E2A27",
-  t1:       "#EFE9E1",
-  t2:       "#A9A29B",
-  t3:       "#77706A",
-  cream:    "#EDE8E0",
-};
+import { C } from "../../lib/theme";
 
 const FONT = "Inter, -apple-system, system-ui, sans-serif";
 

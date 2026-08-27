@@ -7,13 +7,7 @@ import {
   syncFreshness, SYNC_DOT,
   type AgencyClient,
 } from "../../lib/data";
-
-const C = {
-  page: "#0B0A0A", shell: "#1A1715", card: "#232020", cardLine: "#302B28",
-  inset: "#1B1817", t1: "#EFE9E1", t2: "#A9A29B", t3: "#77706A",
-  cream: "#EDE8E0", positive: "#4ADE80", negative: "#EF4444", attention: "#F79521",
-  blue: "#2F80F5",
-};
+import { C } from "../../lib/theme";
 
 type SortKey = "name" | "category" | "plan" | "score" | "citations" | "status" | "lastSyncedAt";
 type SortDir = "asc" | "desc";
@@ -30,7 +24,7 @@ function needsAttention(c: AgencyClient): boolean {
 }
 
 function ScoreBar({ score, max = 100 }: { score: number; max?: number }) {
-  const barColor = score >= 75 ? C.blue : score >= 60 ? "#F59E0B" : C.negative;
+  const barColor = score >= 75 ? C.prog : score >= 60 ? C.attn : C.neg;
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
       <span style={{ fontSize: 13, fontWeight: 700, color: C.t1, width: 28, textAlign: "right" }}>{score}</span>
@@ -139,18 +133,18 @@ export default function AgencyClients() {
                 onClick={() => { setFilterAttention(f => !f); setPage(0); }}
                 style={{
                   display: "inline-flex", alignItems: "center", gap: 5,
-                  background: filterAttention ? C.attention : `${C.attention}22`,
-                  border: `1px solid ${C.attention}55`,
+                  background: filterAttention ? C.attn : `${C.attn}22`,
+                  border: `1px solid ${C.attn}55`,
                   borderRadius: 999, padding: "2px 10px",
                   fontSize: 11, fontWeight: 600,
-                  color: filterAttention ? C.card : C.attention,
+                  color: filterAttention ? C.card : C.attn,
                   cursor: "pointer",
                 }}
               >
                 Needs attention
                 <span style={{
-                  background: filterAttention ? C.card : C.attention,
-                  color: filterAttention ? C.attention : C.card,
+                  background: filterAttention ? C.card : C.attn,
+                  color: filterAttention ? C.attn : C.card,
                   borderRadius: 999, padding: "1px 6px", fontSize: 10, fontWeight: 700,
                 }}>
                   {attentionCount}
@@ -208,11 +202,11 @@ export default function AgencyClients() {
 
                   // Plan chip color
                   const planChipBg = plan === "scale" ? "#2F80F533" : plan === "launch" ? "#A9A29B22" : "#77706A22";
-                  const planChipColor = plan === "scale" ? C.blue : C.t2;
+                  const planChipColor = plan === "scale" ? C.prog : C.t2;
 
                   // Status badge
                   const statusBg = c.status === "active" ? "#4ADE8022" : c.status === "onboarding" ? "#2F80F522" : "#77706A22";
-                  const statusColor = c.status === "active" ? C.positive : c.status === "onboarding" ? C.blue : C.t3;
+                  const statusColor = c.status === "active" ? C.pos : c.status === "onboarding" ? C.prog : C.t3;
 
                   // Simulated this-month delivery
                   const thisMonth = Math.round(3 * 0.7 + 1 * 0.6);
@@ -225,12 +219,12 @@ export default function AgencyClients() {
                       onClick={() => openClient(c.id)}
                       style={{
                         borderBottom: `1px solid ${C.cardLine}`,
-                        background: attention ? `${C.attention}0D` : C.card,
+                        background: attention ? `${C.attn}0D` : C.card,
                         cursor: "pointer",
                         transition: "background 0.12s",
                       }}
                       onMouseEnter={e => (e.currentTarget.style.background = C.inset)}
-                      onMouseLeave={e => (e.currentTarget.style.background = attention ? `${C.attention}0D` : C.card)}
+                      onMouseLeave={e => (e.currentTarget.style.background = attention ? `${C.attn}0D` : C.card)}
                     >
                       {/* Client */}
                       <td style={{ padding: "12px 14px" }}>
@@ -264,7 +258,7 @@ export default function AgencyClients() {
                       <td style={{ padding: "12px 14px" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                           <ScoreBar score={c.score} />
-                          <span style={{ fontSize: 11, fontWeight: 600, color: c.trend >= 0 ? C.positive : C.negative }}>
+                          <span style={{ fontSize: 11, fontWeight: 600, color: c.trend >= 0 ? C.pos : C.neg }}>
                             {c.trend >= 0
                               ? <TrendingUp size={11} style={{ verticalAlign: "middle" }} />
                               : <TrendingDown size={11} style={{ verticalAlign: "middle" }} />}
@@ -281,7 +275,7 @@ export default function AgencyClients() {
                         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                           <div style={{ fontSize: 11, color: C.t2 }}>{thisMonth} of {monthTotal}</div>
                           <div style={{ height: 3, width: 60, background: C.cardLine, borderRadius: 2, overflow: "hidden" }}>
-                            <div style={{ height: "100%", width: `${monthPct * 100}%`, background: C.blue, borderRadius: 2 }} />
+                            <div style={{ height: "100%", width: `${monthPct * 100}%`, background: C.prog, borderRadius: 2 }} />
                           </div>
                         </div>
                       </td>

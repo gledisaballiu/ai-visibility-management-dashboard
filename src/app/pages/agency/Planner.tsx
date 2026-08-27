@@ -9,13 +9,7 @@ import {
 } from "../../lib/data";
 import { usePlanner, computeDelivered, isBehindOnPlan } from "../../lib/plannerContext";
 import { ClientLogo } from "../../lib/ui";
-
-const C = {
-  page: "#0B0A0A", shell: "#1A1715", card: "#232020", cardLine: "#302B28",
-  inset: "#1B1817", hover: "#2E2A27",
-  t1: "#EFE9E1", t2: "#A9A29B", t3: "#77706A",
-  cream: "#EDE8E0", pos: "#4ADE80", neg: "#EF4444", attn: "#F79521", prog: "#2F80F5",
-};
+import { C } from "../../lib/theme";
 
 const nid = () => Date.now() + Math.floor(Math.random() * 9999);
 
@@ -48,8 +42,8 @@ function getCampaignLane(pieces: ContentPiece[]): ("off-site" | "on-site")[] {
 
 const TYPE_META: Record<PlannerContentType, { label: string; Icon: React.ComponentType<any>; color: string; bg: string; short: string }> = {
   youtube:  { label: "YouTube video",    Icon: YouTubeIcon, color: "#EF4444", bg: "rgba(239,68,68,0.1)",  short: "YouTube"  },
-  article:  { label: "Off-site article", Icon: FileText,    color: "#6366F1", bg: "rgba(99,102,241,0.1)", short: "Off-site" },
-  onsite:   { label: "On-site piece",    Icon: Globe,       color: "#10B981", bg: "rgba(16,185,129,0.1)", short: "On-site"  },
+  article:  { label: "Off-site article", Icon: FileText,    color: C.prog, bg: "rgba(47,128,245,0.1)", short: "Off-site" },
+  onsite:   { label: "On-site piece",    Icon: Globe,       color: C.pos, bg: "rgba(74,222,128,0.1)", short: "On-site"  },
   strategy: { label: "Strategy call",    Icon: Phone,       color: "#F59E0B", bg: "rgba(245,158,11,0.1)", short: "Strategy" },
   llm_page: { label: "LLM info page",    Icon: Bot,         color: "#8B5CF6", bg: "rgba(139,92,246,0.1)", short: "LLM page" },
 };
@@ -60,13 +54,13 @@ const STATUS_META: Record<PieceStatus, { label: string; color: string; bg: strin
   brief:     { label: "Brief",     color: "#8B5CF6", bg: "rgba(139,92,246,0.12)"  },
   draft:     { label: "In Draft",  color: "#F59E0B", bg: "rgba(245,158,11,0.12)"  },
   review:    { label: "Review",    color: "#3B82F6", bg: "rgba(59,130,246,0.12)"  },
-  published: { label: "Published", color: "#10B981", bg: "rgba(16,185,129,0.12)"  },
+  published: { label: "Published", color: C.pos, bg: "rgba(74,222,128,0.12)"  },
 };
 
 const TIER_META: Record<Tier, { label: string; price: string; color: string; bg: string; deliverables: string; desc: string }> = {
   start:  { label: "Start",  price: "$12.5K/mo", color: "#6B7280", bg: "rgba(107,114,128,0.08)", deliverables: "2 YouTube · 4 articles · 2 on-site", desc: "Establish your voice with consistent creator content." },
   launch: { label: "Launch", price: "$22.5K/mo", color: "#F59E0B", bg: "rgba(245,158,11,0.1)",   deliverables: "4 YouTube · 8 articles · 4 on-site · LLM page", desc: "Accelerate reach with multi-channel execution." },
-  scale:  { label: "Scale",  price: "$45.5K/mo", color: "#10B981", bg: "rgba(16,185,129,0.1)",   deliverables: "8 YouTube · 16 articles · 8 on-site · strategy calls", desc: "Dominate category authority through volume and strategy." },
+  scale:  { label: "Scale",  price: "$45.5K/mo", color: C.pos, bg: "rgba(74,222,128,0.1)",   deliverables: "8 YouTube · 16 articles · 8 on-site · strategy calls", desc: "Dominate category authority through volume and strategy." },
 };
 
 const CREATORS = ["Kelsey Hightower", "Charity Majors", "Theo Browne", "Nader Dabit", "swyx", "Lee Robinson"];
@@ -308,9 +302,9 @@ function AddPieceRow({ onAdd, clientName }: { onAdd: (p: Omit<ContentPiece, "id"
               <button
                 className="w-full flex items-center gap-2 px-3 py-2.5 text-left cursor-pointer"
                 onClick={() => setOutreachExpanded(o => !o)}
-                style={{ background: "rgba(99,102,241,0.06)" }}>
-                <Mail size={11} style={{ color: "#818CF8", flexShrink: 0 }} />
-                <p className="text-xs font-semibold flex-1" style={{ color: "#818CF8" }}>
+                style={{ background: "rgba(47,128,245,0.06)" }}>
+                <Mail size={11} style={{ color: C.prog, flexShrink: 0 }} />
+                <p className="text-xs font-semibold flex-1" style={{ color: C.prog }}>
                   Send creator outreach to {creator.split(" ")[0]}
                 </p>
                 <span style={{ color: C.t3 }}>
@@ -319,7 +313,7 @@ function AddPieceRow({ onAdd, clientName }: { onAdd: (p: Omit<ContentPiece, "id"
               </button>
 
               {outreachExpanded && (
-                <div className="px-3 pb-3 space-y-2.5" style={{ background: "rgba(99,102,241,0.03)" }}>
+                <div className="px-3 pb-3 space-y-2.5" style={{ background: "rgba(47,128,245,0.03)" }}>
                   <div className="flex items-center gap-2 pt-2">
                     <div className="flex items-center gap-1.5 flex-1">
                       <DollarSign size={11} style={{ color: C.t3, flexShrink: 0 }} />
@@ -346,9 +340,9 @@ function AddPieceRow({ onAdd, clientName }: { onAdd: (p: Omit<ContentPiece, "id"
                   <button
                     onClick={handleSendOutreach}
                     className="w-full flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer"
-                    style={{ background: "rgba(99,102,241,0.18)", color: "#818CF8", border: "1px solid rgba(99,102,241,0.3)" }}
-                    onMouseEnter={e => (e.currentTarget.style.background = "rgba(99,102,241,0.28)")}
-                    onMouseLeave={e => (e.currentTarget.style.background = "rgba(99,102,241,0.18)")}>
+                    style={{ background: "rgba(47,128,245,0.18)", color: C.prog, border: "1px solid rgba(47,128,245,0.3)" }}
+                    onMouseEnter={e => (e.currentTarget.style.background = "rgba(47,128,245,0.28)")}
+                    onMouseLeave={e => (e.currentTarget.style.background = "rgba(47,128,245,0.18)")}>
                     <Send size={11} />
                     Send outreach email to {creator.split(" ")[0]}
                     {rate && <span style={{ opacity: 0.75 }}>· ${Number(rate).toLocaleString()}/piece</span>}
@@ -396,7 +390,7 @@ function PieceRow({ piece, onStatusChange, onNotesChange }: {
         <span className="text-[10px] font-medium w-12 shrink-0 text-right" style={{ color: C.t3 }}>{piece.dueDate}</span>
         <button onClick={() => setNotesOpen(o => !o)}
           className="shrink-0 p-1 rounded-lg transition-colors opacity-0 group-hover:opacity-100 cursor-pointer"
-          style={{ color: piece.notes ? "#6366F1" : C.t3 }}
+          style={{ color: piece.notes ? C.prog : C.t3 }}
           onMouseEnter={e => (e.currentTarget.style.background = C.hover)}
           onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
           <MessageSquare size={11} />
@@ -456,8 +450,8 @@ function CampaignSection({ campaign, clientId, onUpdate, pieceFilter, filterStat
         {getCampaignLane(campaign.pieces).map(lane => (
           <span key={lane} className="text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide whitespace-nowrap shrink-0"
             style={{
-              background: lane === "off-site" ? "rgba(99,102,241,0.14)" : "rgba(16,185,129,0.14)",
-              color:      lane === "off-site" ? "#818CF8"               : "#34D399",
+              background: lane === "off-site" ? "rgba(47,128,245,0.14)" : "rgba(74,222,128,0.14)",
+              color:      lane === "off-site" ? C.prog               : C.pos,
             }}>
             {lane === "off-site" ? "Off-site" : "On-site"}
           </span>

@@ -2,21 +2,16 @@ import { useState } from "react";
 import { useOutletContext } from "react-router";
 import { Calendar, Globe, Users, TrendingUp, CheckCircle, RotateCcw, FileText, Bot, Phone, ChevronDown, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
-import { agencyClientsData, agencyCampaignsData, type PieceStatus, type PlannerContentType, type ContentPiece } from "../../lib/data";
+import { agencyClientsData, agencyCampaignsData, LIME, type PieceStatus, type PlannerContentType, type ContentPiece } from "../../lib/data";
 import { usePlanner } from "../../lib/plannerContext";
+import { C } from "../../lib/theme";
 
 const FONT = "Inter, -apple-system, system-ui, sans-serif";
 
-const C = {
-  page: "#1A1715", card: "#232020", cardLine: "#302B28", inset: "#1B1817",
-  t1: "#EFE9E1", t2: "#A9A29B", t3: "#77706A",
-  pos: "#4ADE80", neg: "#EF4444", attn: "#F59E0B", prog: "#2F80F5",
-};
-
 const TYPE_META: Record<PlannerContentType, { label: string; color: string; bg: string }> = {
   youtube:  { label: "YouTube",  color: "#EF4444", bg: "rgba(239,68,68,0.1)"  },
-  article:  { label: "Article",  color: "#6366F1", bg: "rgba(99,102,241,0.1)" },
-  onsite:   { label: "On-site",  color: "#10B981", bg: "rgba(16,185,129,0.1)" },
+  article:  { label: "Article",  color: C.prog, bg: "rgba(47,128,245,0.1)" },
+  onsite:   { label: "On-site",  color: C.pos, bg: "rgba(74,222,128,0.1)" },
   strategy: { label: "Strategy", color: "#F59E0B", bg: "rgba(245,158,11,0.1)" },
   llm_page: { label: "LLM page", color: "#8B5CF6", bg: "rgba(139,92,246,0.1)" },
 };
@@ -25,8 +20,8 @@ const STATUS_META: Record<PieceStatus, { label: string; color: string; bg: strin
   idea:      { label: "Planning",          color: "#71717A", bg: "rgba(113,113,122,0.12)" },
   brief:     { label: "Briefed",           color: "#8B5CF6", bg: "rgba(139,92,246,0.12)"  },
   draft:     { label: "In Progress",       color: "#F59E0B", bg: "rgba(245,158,11,0.12)"  },
-  review:    { label: "Needs Your Review", color: "#3B82F6", bg: "rgba(59,130,246,0.12)"  },
-  published: { label: "Live",              color: "#10B981", bg: "rgba(16,185,129,0.12)"  },
+  review:    { label: "Needs Your Review", color: C.prog, bg: "rgba(47,128,245,0.12)"  },
+  published: { label: "Live",              color: C.pos, bg: "rgba(74,222,128,0.12)"  },
 };
 
 function TypeIcon({ type }: { type: PlannerContentType }) {
@@ -122,15 +117,15 @@ export default function ClientCampaigns() {
                   onClick={() => setSelectedId(camp.id)}
                   style={{
                     width: "100%", textAlign: "left", padding: "14px 20px",
-                    cursor: "pointer", background: isActive ? "rgba(134,224,58,0.08)" : "transparent",
-                    borderLeft: isActive ? "3px solid #86E03A" : "3px solid transparent",
+                    cursor: "pointer", background: isActive ? "rgba(198,242,78,0.08)" : "transparent",
+                    borderLeft: isActive ? `3px solid ${LIME}` : "3px solid transparent",
                     borderBottom: `1px solid ${C.cardLine}`,
                     transition: "all 100ms",
                   }}>
                   <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 5 }}>
                     <div style={{ fontSize: 13, fontWeight: 600, color: C.t1, flex: 1, paddingRight: 8 }}>{camp.name}</div>
                     {forReview > 0 && (
-                      <span style={{ fontSize: 10, fontWeight: 700, background: "rgba(59,130,246,0.15)", color: "#60A5FA", borderRadius: 999, padding: "1px 7px", flexShrink: 0 }}>
+                      <span style={{ fontSize: 10, fontWeight: 700, background: "rgba(47,128,245,0.15)", color: C.prog, borderRadius: 999, padding: "1px 7px", flexShrink: 0 }}>
                         {forReview} to review
                       </span>
                     )}
@@ -185,7 +180,7 @@ export default function ClientCampaigns() {
                     {[
                       { label: "Total",     value: selectedCampaign.pieces.length,                                        color: C.t1    },
                       { label: "Live",      value: selectedCampaign.pieces.filter(p => p.status === "published").length,  color: C.pos   },
-                      { label: "To review", value: reviewCount,                                                            color: "#60A5FA" },
+                      { label: "To review", value: reviewCount,                                                            color: C.prog },
                     ].map(({ label, value, color }) => (
                       <div key={label} style={{ textAlign: "center" }}>
                         <div style={{ fontSize: 18, fontWeight: 700, color, lineHeight: 1 }}>{value}</div>
@@ -208,7 +203,7 @@ export default function ClientCampaigns() {
                     <span style={{ marginLeft: 6, fontSize: 11, color: C.t3 }}>({selectedCampaign.pieces.length})</span>
                   </p>
                   {reviewCount > 0 && (
-                    <span style={{ fontSize: 11, fontWeight: 700, background: "rgba(59,130,246,0.15)", color: "#60A5FA", borderRadius: 999, padding: "2px 8px" }}>
+                    <span style={{ fontSize: 11, fontWeight: 700, background: "rgba(47,128,245,0.15)", color: C.prog, borderRadius: 999, padding: "2px 8px" }}>
                       {reviewCount} awaiting your approval
                     </span>
                   )}
@@ -232,11 +227,11 @@ export default function ClientCampaigns() {
                               display: "flex", alignItems: "center", gap: 12,
                               padding: "12px 24px",
                               borderBottom: i < selectedCampaign.pieces.length - 1 ? `1px solid ${C.cardLine}` : "none",
-                              background: needsReview ? "rgba(59,130,246,0.04)" : "transparent",
+                              background: needsReview ? "rgba(47,128,245,0.04)" : "transparent",
                               transition: "background 150ms",
                             }}
                             onMouseEnter={e => { if (!needsReview) (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.02)"; }}
-                            onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.background = needsReview ? "rgba(59,130,246,0.04)" : "transparent"; }}>
+                            onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.background = needsReview ? "rgba(47,128,245,0.04)" : "transparent"; }}>
                             {/* Type badge */}
                             <span style={{ display: "inline-flex", alignItems: "center", gap: 5, fontSize: 10, fontWeight: 600, background: tm.bg, color: tm.color, borderRadius: 999, padding: "2px 8px", flexShrink: 0, whiteSpace: "nowrap" }}>
                               <TypeIcon type={piece.type} />{tm.label}
@@ -266,7 +261,7 @@ export default function ClientCampaigns() {
                               <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
                                 <button
                                   onClick={() => approvePiece(selectedCampaign.id, piece.id)}
-                                  style={{ display: "flex", alignItems: "center", gap: 5, background: "#86E03A", color: "#0B0A0A", border: "none", borderRadius: 8, padding: "6px 12px", fontSize: 12, fontWeight: 700, cursor: "pointer", whiteSpace: "nowrap" }}>
+                                  style={{ display: "flex", alignItems: "center", gap: 5, background: LIME, color: "#0B0A0A", border: "none", borderRadius: 8, padding: "6px 12px", fontSize: 12, fontWeight: 700, cursor: "pointer", whiteSpace: "nowrap" }}>
                                   <CheckCircle size={13} />Approve
                                 </button>
                                 <button
@@ -290,8 +285,8 @@ export default function ClientCampaigns() {
 
               {/* Bottom call-to-action for review items */}
               {reviewCount > 0 && (
-                <div style={{ padding: "12px 24px", borderTop: `1px solid ${C.cardLine}`, background: "rgba(59,130,246,0.05)", display: "flex", alignItems: "center", gap: 10 }}>
-                  <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#60A5FA", flexShrink: 0 }} />
+                <div style={{ padding: "12px 24px", borderTop: `1px solid ${C.cardLine}`, background: "rgba(47,128,245,0.05)", display: "flex", alignItems: "center", gap: 10 }}>
+                  <div style={{ width: 6, height: 6, borderRadius: "50%", background: C.prog, flexShrink: 0 }} />
                   <p style={{ fontSize: 12, color: "#93C5FD", flex: 1 }}>
                     <span style={{ fontWeight: 700 }}>{reviewCount} piece{reviewCount !== 1 ? "s" : ""}</span> submitted for your approval above.
                     Approve to publish or request revisions.

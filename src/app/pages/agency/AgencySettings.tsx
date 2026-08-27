@@ -2,13 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { LogOut, CheckCircle2, AlertCircle, RefreshCw, Plus, ChevronDown, Eye, EyeOff } from "lucide-react";
 import { FONT, agencyClientsData } from "../../lib/data";
-
-const C = {
-  page: "#0B0A0A", shell: "#1A1715", card: "#232020", cardLine: "#302B28",
-  inset: "#1B1817", hover: "#2E2A27",
-  t1: "#EFE9E1", t2: "#A9A29B", t3: "#77706A",
-  cream: "#EDE8E0", pos: "#4ADE80", neg: "#EF4444", attn: "#F79521", prog: "#2F80F5",
-};
+import { C } from "../../lib/theme";
 
 const TABS = ["Team", "Integrations", "Billing", "Notifications"] as const;
 type Tab = typeof TABS[number];

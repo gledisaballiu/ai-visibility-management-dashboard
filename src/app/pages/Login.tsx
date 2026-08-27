@@ -3,17 +3,7 @@ import { useNavigate } from "react-router";
 import { ArrowRight, Building2, Users, Eye, EyeOff, AlertCircle } from "lucide-react";
 import { YardGEOLogo, WordMark } from "../lib/logo";
 import { FONT, agencyClientsData } from "../lib/data";
-
-const C = {
-  page:     "#0B0A0A",
-  card:     "#232020",
-  cardLine: "#302B28",
-  inset:    "#1B1817",
-  t1:       "#EFE9E1",
-  t2:       "#A9A29B",
-  t3:       "#77706A",
-  cream:    "#EDE8E0",
-};
+import { C } from "../lib/theme";
 
 type Portal = "agency" | "client";
 
